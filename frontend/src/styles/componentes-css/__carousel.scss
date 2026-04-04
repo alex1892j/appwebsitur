@@ -1,0 +1,164 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+@use '../base/reset';
+@use "sass:color";
+
+.main-services-view {
+  @include mobile {
+    padding: 20px 10px;
+    background: $color-black;
+    min-height: 100vh;
+
+    .category-group {
+      margin-bottom: 40px;
+
+      .category-title {
+        font-family: $font-title;
+        color: $color-white;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        padding-left: 10px;
+        border-left: 4px solid $color-red;
+      }
+
+      .carousel-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        touch-action: pan-y;
+        border-radius: $radius;
+
+        .nav-arrow {
+          position: absolute;
+          z-index: 10;
+          background: rgba($color-black, 0.6);
+          color: $color-white;
+          border: none;
+          padding: 15px 10px;
+          cursor: pointer;
+          font-size: 1.5rem;
+          transition: color 0.3s;
+
+          &:hover {
+            color: $color-red;
+          }
+
+          &.left {
+            left: 0;
+            border-radius: 0 5px 5px 0;
+          }
+
+          &.right {
+            right: 0;
+            border-radius: 5px 0 0 5px;
+          }
+        }
+
+        .carousel-track {
+          display: flex;
+          width: 100%;
+          transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          will-change: transform;
+
+          .product-card {
+            min-width: 100%;
+            flex-shrink: 0;
+            transition: transform 0.5s ease;
+            padding: 0 5px;
+            box-sizing: border-box;
+
+            .card-inner {
+              background: $color-dark;
+              border-radius: $radius;
+              overflow: hidden;
+              border: 1px solid rgba($color-white, 0.1);
+
+              .image-box {
+                position: relative;
+                height: 200px;
+
+                img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                }
+
+                .price-badge {
+                  position: absolute;
+                  top: 10px;
+                  right: 10px;
+                  background: $color-red;
+                  color: $color-white;
+                  padding: 5px 12px;
+                  border-radius: 20px;
+                  font-family: $font-title;
+                  font-weight: bold;
+                }
+              }
+
+              .info-box {
+                padding: 20px;
+                text-align: center;
+
+                h3 {
+                  color: $color-white;
+                  font-family: $font-title;
+                  margin-bottom: 10px;
+                  text-transform: uppercase;
+                }
+
+                p {
+                  color: $color-gray;
+                  font-size: 0.9rem;
+                  margin-bottom: 20px;
+                  height: 40px; // Altura fija para que todas las cards midan igual
+                  overflow: hidden;
+                }
+
+                .btn-reservar {
+                  width: 100%;
+                  padding: 12px;
+                  background: transparent;
+                  border: 2px solid $color-red;
+                  color: $color-red;
+                  font-weight: bold;
+                  text-transform: uppercase;
+                  transition: all 0.3s;
+
+                  &:hover {
+                    background: $color-red;
+                    color: $color-white;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .dots-group {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 15px;
+
+        .dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: rgba($color-white, 0.3);
+          cursor: pointer;
+          transition: 0.3s;
+
+          &.active {
+            background: $color-red;
+            width: 20px;
+            border-radius: 10px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+import { DataSource } from 'typeorm';
+import { User } from 'src/user/entities/user.entity';
+import { Appointment } from 'src/appointment/entities/appointment.entity';
+import { Product } from 'src/products/entities/product.entity';
+import { Category } from 'src/categories/entities/category.entity';
+declare const _default: (() => {
+    type: string;
+    host: string;
+    port: number;
+    username: string;
+    password: string;
+    database: string;
+    synchronize: boolean;
+    logging: boolean;
+    autoLoadEntities: boolean;
+    entities: (typeof Category | typeof Product | typeof Appointment | typeof User)[];
+    subscribers: never[];
+    extra: {};
+}) & import("@nestjs/config").ConfigFactoryKeyHost<{
+    type: string;
+    host: string;
+    port: number;
+    username: string;
+    password: string;
+    database: string;
+    synchronize: boolean;
+    logging: boolean;
+    autoLoadEntities: boolean;
+    entities: (typeof Category | typeof Product | typeof Appointment | typeof User)[];
+    subscribers: never[];
+    extra: {};
+}>;
+export default _default;
+export declare const connectSource: DataSource;

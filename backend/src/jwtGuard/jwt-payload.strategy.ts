@@ -1,0 +1,26 @@
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { ConfigService } from '@nestjs/config';
+
+@Injectable()
+export class JwtPayloadStrategy extends PassportStrategy(Strategy, 'jwt-payload') {
+  constructor(private readonly configService: ConfigService) {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
+      secretOrKey: configService.get('JWT_SECRET_KEY'),
+    });
+  }
+
+  async validate(payload: any) {
+    if (!payload || !payload.sub) {
+      throw new UnauthorizedException('Token inválido o incompleto');
+    }
+    return {
+      id: payload.sub,
+      username: payload.username,
+      role: payload.role,
+    };
+  }
+}

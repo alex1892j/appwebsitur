@@ -1,0 +1,247 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+@use '../base/reset';
+@use "sass:color";
+
+.admin-products-mobile {
+  @include mobile {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 90vh;
+    background-color: $color-black;
+    color: $color-white;
+    padding: 15px;
+    gap: 20px;
+    font-family: $font-primary;
+    margin: 4rem 0;
+  // --- Slider de Categorías ---
+ .category-slider {
+  touch-action: pan-y;
+  user-select: none;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  background: $color-dark;
+  border-radius: $radius;
+  height: 60px;
+  box-shadow: $shadow-soft;
+  overflow: hidden;
+   &.direction-next {
+      .chip-slide {
+        &:not(.active) { transform: translateX(-100%); } // Sale por la izquierda
+        &.active { animation: slideInRight 0.4s forwards; } // Entra por la derecha
+      }
+    }
+
+    &.direction-prev {
+      .chip-slide {
+        &:not(.active) { transform: translateX(100%); } // Sale por la derecha
+        &.active { animation: slideInLeft 0.4s forwards; } // Entra por la izquierda
+      }
+    }
+
+  .slider-content {
+    width: 100%;
+    cursor: grab;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:active { cursor: grabbing; }
+
+    .chip-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transform: translateX(100px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+     
+
+      &.active {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: all;
+      }
+
+      
+
+      .category-item {
+        background: $color-red;
+        color: $color-white;
+        padding: 10px 10px;
+        border-radius: $radius;
+        font-family: $font-title;
+        text-transform: uppercase;
+        font-size: 14px;
+        box-shadow: 0 0 15px rgba($color-red, 0.3);
+        text-align: center;
+        white-space: nowrap;
+        width: 100%;
+      }
+
+      .btn-del-cat {
+        position: absolute;
+        right: 5%; 
+        color: $color-white;
+        font-weight: bold;
+        font-size: 18px;
+        text-shadow: 1px 1px 2px black;
+      }
+    }
+  }
+
+  .btn-nav {
+    
+    color: $color-red;
+    font-size: 30px;
+    font-weight: bold;
+    z-index: 10;
+    &:active { transform: scale(0.9); }
+  }
+}
+  @keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+  // --- Contenedor de Tabla Grid ---
+  .table-container {
+    display: flex;
+    flex-direction: column;
+    background: $color-dark;
+    border-radius: $radius;
+    overflow: hidden;
+    box-shadow: $shadow-soft;
+    border: 1px solid rgba($color-white, 0.05);
+
+    .table-header-grid {
+      display: grid;
+      grid-template-columns: 50px 1fr 70px 100px;
+      background: $color-red;
+      font-family: $font-title;
+      text-transform: uppercase;
+      padding: 12px 5px;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    .table-body-scroll {
+      overflow-y: auto;
+      max-height: 100%;
+
+      .table-row-grid {
+        display: grid;
+        grid-template-columns: 50px 1fr 70px 100px;
+        align-items: center;
+        padding: 12px 5px;
+        border-bottom: 1px solid rgba($color-white, 0.05);
+        transition: background 0.2s;
+
+        &:active { background: rgba($color-white, 0.03); }
+
+        .cell-img img {
+          width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          object-fit: cover;
+          border: 1px solid $color-gray;
+        }
+
+        .cell-name {
+          font-family: $font-primary;
+          font-size: 14px;
+          padding-left: 10px;
+          text-align: left;
+          color: $color-white;
+        }
+
+        .cell-price {
+          font-family: $font-title;
+          color: $color-gray;
+        }
+
+        .cell-actions {
+          display: flex;
+          justify-content: center;
+          gap: 8px;
+          button {
+            padding: 5px;
+            font-size: 16px;
+            &.btn-edit { color: $color-white; }
+            &.btn-delete { color: $color-red; }
+            &.btn-view { color: $color-gray; }
+          }
+        }
+      }
+    }
+  }
+
+  // --- Tarjeta de Vista Previa ---
+  .preview-zone {
+    height: 180px;
+
+    .card-preview {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      background: $color-dark;
+      border-radius: $radius;
+      height: 160px;
+      overflow: hidden;
+      box-shadow: $shadow-soft;
+      border-left: 4px solid $color-red;
+
+      .card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .card-content {
+        padding: 15px;
+        h4 {
+          font-family: $font-title;
+          font-size: 18px;
+          text-transform: uppercase;
+          color: $color-white;
+          margin-bottom: 5px;
+        }
+        .price {
+          color: $color-red;
+          font-family: $font-title;
+          font-size: 16px;
+          margin-bottom: 8px;
+        }
+        .description {
+          font-family: $font-primary;
+          font-size: 12px;
+          color: $color-gray;
+          line-height: 1.4;
+        }
+      }
+    }
+
+    .card-empty {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed $color-dark;
+      border-radius: $radius;
+      color: $color-gray;
+      font-family: $font-primary;
+      font-size: 14px;
+    }
+  }
+}
+
+}

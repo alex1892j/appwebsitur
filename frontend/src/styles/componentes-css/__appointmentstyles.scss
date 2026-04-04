@@ -1,0 +1,229 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+@use 'sass:color';
+
+.appointment-container {
+  max-width: 420px;
+  margin: 70px auto;
+  padding: 30px;
+  border-radius: $radius;
+  background: $color-white;
+  box-shadow: $shadow-soft;
+  font-family: $font-primary;
+
+  @include mobile {
+    margin: 30px 15px;
+    padding: 22px;
+  }
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-family: $font-title;
+  font-size: 24px;
+  letter-spacing: 1px;
+  color: $color-black;
+}
+
+.product-summary {
+  background: linear-gradient(
+    135deg,
+    $color-black,
+    $color-dark
+  );
+  color: $color-white;
+  padding: 16px;
+  border-radius: $radius;
+  margin-bottom: 25px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+
+  p {
+    margin: 6px 0;
+    font-size: 15px;
+
+    strong {
+      font-weight: 600;
+      color: $color-red;
+    }
+  }
+}
+
+.appointment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-dark;
+}
+
+.form-input {
+  padding: 12px 14px;
+  margin-top: 6px;
+  border-radius: $radius;
+  border: 1px solid $color-gray;
+  font-size: 15px;
+  font-family: $font-primary;
+  background: white;
+  transition: all 0.25s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $color-red;
+    box-shadow: 0 0 0 2px rgba(177, 18, 38, 0.2);
+  }
+
+  &[readonly] {
+    background: #f0f0f0;
+    color: $color-gray;
+    cursor: not-allowed;
+  }
+}
+
+.submit-button {
+  margin-top: 15px;
+  padding: 14px;
+  border-radius: $radius;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  font-family: $font-primary;
+
+  background: linear-gradient(
+    135deg,
+    $color-red,
+    color.adjust($color-red, $lightness: -10%)
+  );
+  color: $color-white;
+
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 15px rgba(177, 18, 38, 0.35);
+  }
+
+  &:disabled {
+    background: $color-gray;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+.my-appointments {
+  margin-top: 3rem;
+  padding: 2rem;
+  background-color: $color-dark;
+  border-radius: $radius;
+  box-shadow: $shadow-soft;
+  color: $color-white;
+  font-family: $font-primary;
+
+  h2 {
+    font-family: $font-title;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  .p-myappoinment {
+    font-size: 0.95rem;
+    margin: 0.3rem 0;
+    color: $color-white;
+  }
+}
+
+.appointments-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1.5rem;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include desktop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.appointment-card {
+  background-color: $color-black;
+  padding: 1.5rem;
+  border-radius: $radius;
+  box-shadow: $shadow-soft;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.6rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
+  }
+
+  strong {
+    color: $color-gray;
+    font-weight: 500;
+  }
+}
+
+.status {
+  text-transform: capitalize;
+  font-weight: 600;
+
+  &.active {
+    color: #22c55e;
+  }
+
+  &.cancelled {
+    color: $color-red;
+  }
+
+  &.completed {
+    color: $color-gray;
+  }
+}
+
+.btn-cancel {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  background-color: transparent;
+  border: 1px solid $color-red;
+  color: $color-red;
+  border-radius: $radius;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background-color: $color-red;
+    color: $color-white;
+  }
+}
+
+@include mobile {
+  .my-appointments {
+    padding: 1.2rem;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .appointment-card {
+    padding: 1.2rem;
+  }
+}
