@@ -49,6 +49,9 @@ let AppointmentsController = class AppointmentsController {
     cancel(id, user) {
         return this.appointmentsService.cancelAppointment(id, user);
     }
+    async remove(id) {
+        return await this.appointmentsService.remove(id);
+    }
 };
 exports.AppointmentsController = AppointmentsController;
 __decorate([
@@ -88,6 +91,14 @@ __decorate([
     __metadata("design:paramtypes", [Number, user_entity_1.User]),
     __metadata("design:returntype", void 0)
 ], AppointmentsController.prototype, "cancel", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    (0, roles_decorator_1.Roles)(user_role_enum_1.UserRole.ADMIN),
+    __param(0, (0, common_3.Param)('id', common_3.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], AppointmentsController.prototype, "remove", null);
 exports.AppointmentsController = AppointmentsController = __decorate([
     (0, common_1.Controller)('appointments'),
     __metadata("design:paramtypes", [appointment_service_1.AppointmentsService,

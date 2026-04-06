@@ -85,6 +85,13 @@ let AppointmentsService = class AppointmentsService {
             order: { date: 'ASC' },
         });
     }
+    async remove(id) {
+        const appointment = await this.appointmentRepository.findOneBy({ id });
+        if (!appointment) {
+            throw new common_1.NotFoundException(`El turno con ID ${id} no existe`);
+        }
+        return await this.appointmentRepository.remove(appointment);
+    }
 };
 exports.AppointmentsService = AppointmentsService;
 exports.AppointmentsService = AppointmentsService = __decorate([

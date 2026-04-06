@@ -1,7 +1,7 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 @use 'sass:color';
-
+@include mobile {
 .appointment-container {
   max-width: 420px;
   margin: 70px auto;
@@ -11,10 +11,10 @@
   box-shadow: $shadow-soft;
   font-family: $font-primary;
 
-  @include mobile {
+ 
     margin: 30px 15px;
     padding: 22px;
-  }
+  
 }
 
 .title {
@@ -214,7 +214,162 @@
   }
 }
 
-@include mobile {
+/* --- SECCIÓN DE PAGOS --- */
+.payment-area {
+  margin-top: 10px;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.payment-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Grupo de Botones Yape/Plin */
+.btn-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.btn-group button {
+  padding: 12px 5px;
+  border: 2px solid #eee;
+  background: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+/* YAPE: Morado característico */
+.btn-group button.btn-yape.active {
+  background-color: #742284;
+  color: white;
+  border-color: #5a1a66;
+  box-shadow: 0 4px 10px rgba(116, 34, 132, 0.3);
+}
+
+/* PLIN: Celeste/Cian brillante */
+.btn-group button.btn-plin.active {
+  background-color: #00d1ce;
+  color: #004a49; /* Texto oscuro para mejor contraste */
+  border-color: #00b3b0;
+  box-shadow: 0 4px 10px rgba(0, 209, 206, 0.3);
+}
+
+
+.btn-group button:hover:not(.active) {
+  border-color: #ccc;
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+}
+
+/* Estado Activo de los Botones */
+.btn-group button.active {
+  background: #007bff;
+  color: white;
+  border-color: #0056b3;
+  box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Sección QR */
+.qr-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px dashed #ccc;
+  animation: fadeIn 0.4s ease;
+}
+
+.title-sub {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: $color-dark;
+}
+
+.qr-image {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+  border: 1px solid #eee;
+  padding: 5px;
+}
+
+/* Caja para copiar número */
+.copy-box {
+  background: #024991;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.copy-box:hover {
+  background: #057df5;
+}
+
+/* Input de Archivo (Comprobante) */
+.file-upload {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.file-upload input {
+  margin-top: 5px;
+  font-size: 0.8rem;
+}
+
+/* Botón Final */
+.submit-btn {
+  background: #28a745;
+  color: rgb(247, 243, 243);
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: #218838;
+}
+
+.submit-btn:disabled {
+  background: #090909;
+  cursor: not-allowed;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
   .my-appointments {
     padding: 1.2rem;
 

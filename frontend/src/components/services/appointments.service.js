@@ -26,3 +26,8 @@ export const cancelAppointment = async (id) => {
   );
   return res.data;
 };
+
+export const deleteAppointment = async (id) => {
+  const res = await axios.delete(`${API_URL}/${id}`, authHeaders());
+  return res.data;
+};

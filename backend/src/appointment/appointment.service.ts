@@ -102,4 +102,14 @@ export class AppointmentsService {
       order: { date: 'ASC' },
     });
   }
+
+  async remove(id: number) {
+    const appointment = await this.appointmentRepository.findOneBy({ id });
+    
+    if (!appointment) {
+      throw new NotFoundException(`El turno con ID ${id} no existe`);
+    }
+
+    return await this.appointmentRepository.remove(appointment);
+  }
 }

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get, Delete } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UseInterceptors, UploadedFile } from '@nestjs/common';
 import { AppointmentsService } from './appointment.service';
@@ -30,7 +30,6 @@ export class AppointmentsController {
   ){
     let paymentImageData = { url: null, publicId: null };
 
-    // Si el usuario eligió Yape/Plin y subió un archivo, lo procesamos como PRIVADO
     if (file && (dto.paymentMethod === 'yape' || dto.paymentMethod === 'plin')) {
       const uploadResult = await this.cloudinaryService.uploadPaymentCapture(file);
       paymentImageData.url = uploadResult.secure_url;
@@ -59,5 +58,11 @@ export class AppointmentsController {
   @Patch(':id/cancel')
   cancel(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: User) {
     return this.appointmentsService.cancelAppointment(id, user);
+  }
+
+  @Delete(':id')
+  @Roles(UserRole.ADMIN)
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return await this.appointmentsService.remove(id);
   }
 }

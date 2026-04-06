@@ -14,4 +14,5 @@ export declare class AppointmentsService {
     findByUser(userId: number): Promise<Appointment[]>;
     cancelAppointment(appointmentId: number, user: User): Promise<Appointment>;
     findAll(): Promise<Appointment[]>;
+    remove(id: number): Promise<Appointment>;
 }

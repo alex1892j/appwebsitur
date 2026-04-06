@@ -10,4 +10,5 @@ export declare class AppointmentsController {
     findMyAppointments(user: User): Promise<import("./entities/appointment.entity").Appointment[]>;
     findAllAppointments(): Promise<import("./entities/appointment.entity").Appointment[]>;
     cancel(id: number, user: User): Promise<import("./entities/appointment.entity").Appointment>;
+    remove(id: number): Promise<import("./entities/appointment.entity").Appointment>;
 }
