@@ -1,13 +1,12 @@
 
 @use '__reset.scss';
-@use './componentes-css/_services.scss';
+@use './pagesStyles/__homeStyle.scss';
+@use './pagesStyles/__serviciosStyle.scss';
+@use './componentes-css/__productList-style.scss';
+@use './componentes-css/__tablasApoinment.scss';
 @use './componentes-css/_carousel.scss';
 @use './componentes-css/__appointmentstyles.scss';
 @use './componentes-css/_managementProduct.scss';
 @use './componentes-css/_confirmModal.scss';
 @use './componentes-css/_nadvar.scss';
 
-// real styles
-@use './pagesStyles/__homeStyle.scss';
-@use './pagesStyles/__serviciosStyle.scss';
-@use './componentes-css/__productList-style.scss';

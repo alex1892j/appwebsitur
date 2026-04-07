@@ -105,9 +105,9 @@ export default function AppointmentForm() {
         `--------------------------%0A` +
         `_Reserva realizada exitosamente_`;
 
-      const whatsappUrl = `https://wa.me/51${ADMIN_NUMBER}?text=${message}`;
+        alert("Cita registrada correctamente ✅. Se ha verificado el adelanto del 50%.");
 
-      alert("Cita registrada correctamente ✅. Se ha verificado el adelanto del 50%.");
+      const whatsappUrl = `https://wa.me/51${ADMIN_NUMBER}?text=${message}`;
       
       window.open(whatsappUrl, "_blank");
       navigate("/");

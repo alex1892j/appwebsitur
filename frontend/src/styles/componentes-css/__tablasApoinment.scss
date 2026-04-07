@@ -1,0 +1,200 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+@use 'sass:color';
+
+@include mobile {
+
+    .product-form-wrapper{
+        max-width: 100%;
+        background: $color-white;
+        box-shadow: $shadow-soft;
+        font-family: $font-primary;
+    }
+
+    /* Contenedor con Scroll Interno */
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+        background: #d0c7c7;
+        color: #171717;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .appointments-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .appointments-table th,
+    .appointments-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    .appointments-table thead {
+        background-color: #f8f9fa;
+    }
+    
+        .appointments-table thead {
+            display: none;
+           
+        }
+
+        .appointments-table tr {
+            display: block;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .appointments-table td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 55%;
+            /* Espacio para el título vertical */
+        }
+
+        .appointments-table td:last-child {
+            border-bottom: 0;
+        }
+
+        /* Insertamos el título de la columna antes del contenido */
+        .appointments-table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 15px;
+            width: 45%;
+            white-space: nowrap;
+            font-weight: bold;
+            text-align: left;
+            color: #555;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .actions-cell {
+            justify-content: center !important;
+            padding-left: 15px !important;
+            gap: 20px;
+        }
+    
+
+    /* Estilos de elementos internos */
+    .product-tag {
+        background: #f6f4f4;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+    }
+
+    .badge-payment {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: bold;
+    }
+
+    .status-pill {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+
+    .thumbnail-wrapper {
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        border-radius: 5px;
+        overflow: hidden;
+        border: 1px solid #ccc;
+        position: relative;
+    }
+
+    .payment-thumbnail {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .thumbnail-overlay {
+        position: absolute;
+        top: 0;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        font-size: 0.6rem;
+    }
+
+    .thumbnail-wrapper:hover .thumbnail-overlay {
+        opacity: 1;
+    }
+
+    /* Botones */
+    .actions-cell{
+        display: flex;
+        flex-direction: column;
+     
+        
+        .btn-cancel {
+            background: #ffc107;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-left: 60%;
+            cursor: pointer;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-left: 60%;
+            cursor: pointer;
+        }
+    }
+
+    /* Modal Imagen */
+    .image-fullscreen-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .fullscreen-image {
+        max-width: 90%;
+        max-height: 80vh;
+        border-radius: 8px;
+    }
+
+    .close-modal-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 2rem;
+        color: white;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+}
