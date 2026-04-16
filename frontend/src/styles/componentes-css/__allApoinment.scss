@@ -1,0 +1,35 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+@use 'sass:color';
+@include mobile{
+    .admin-appointments-view{
+        max-width: 100%;
+        margin: 10px auto;
+        text-align: center;
+        .view-header{
+            .h2-title{
+                font-family: $font-title;
+                color: $color-black;
+                background: linear-gradient(to right, $color-gray, $color-white, $color-gray);
+                box-shadow: 10px 1px 40px $color-gray, inset 5px 1px 30px $color-red;
+                border-radius: 10px;
+                margin-bottom: 10px;
+                padding: 0.5em;
+            }
+            .btn-refresh{
+                background-color: $color-red;
+                color: $color-white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: $radius;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: color.scale($color-red, $lightness: -10%);
+                }
+            }
+        }
+    }
+}

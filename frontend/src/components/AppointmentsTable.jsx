@@ -18,15 +18,8 @@ function AppointmentsTable({
 
   const isAdmin = user?.role === "admin";
 
-  const handleCancelClick = (id) => {
-    setModalConfig({ id, type: "cancel" });
-    setConfirmOpen(true);
-  };
-
-  const handleDeleteClick = (id) => {
-    setModalConfig({ id, type: "delete" });
-    setConfirmOpen(true);
-  };
+  // Invertimos para que el último turno aparezca primero a la izquierda
+  const sortedAppointments = [...appointments].reverse();
 
   const handleConfirmAction = async () => {
     try {
@@ -40,7 +33,7 @@ function AppointmentsTable({
       setAlertOpen(true);
       onRefresh();
     } catch (error) {
-      setAlertMessage(`Error al ${modalConfig.type === "cancel" ? "cancelar" : "eliminar"} el turno`);
+      setAlertMessage(`Error al procesar la solicitud`);
       setAlertOpen(true);
     } finally {
       setConfirmOpen(false);
@@ -50,117 +43,101 @@ function AppointmentsTable({
 
   return (
     <div className="table-container">
-      <table className="appointments-table">
-        <thead>
-          <tr>
-            {showUserColumn && <th>Usuario</th>}
-            {showUserColumn && <th>Celular</th>}
-            <th>Servicio</th>
-            <th>Total</th>
-            <th>Seña (50%)</th>
-            <th>Restante</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Comprobante</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
+      <div className="appointments-grid-horizontal">
+        {sortedAppointments.length === 0 ? (
+          <div className="empty-state">No hay registros disponibles</div>
+        ) : (
+          sortedAppointments.map((appt) => {
+            const precioTotal = parseFloat(appt.product?.precio || 0);
+            const pagado = precioTotal / 2;
+            const restante = precioTotal - pagado;
 
-        <tbody>
-          {appointments.length === 0 ? (
-            <tr>
-              <td colSpan={showUserColumn ? 12 : 10} className="empty-row">
-                No hay registros disponibles
-              </td>
-            </tr>
-          ) : (
-            appointments.map((appt) => {
-              // Cálculos de pago
-              const precioTotal = parseFloat(appt.product?.precio || 0);
-              const pagado = precioTotal / 2;
-              const restante = precioTotal - pagado;
+            return (
+              <div key={appt.id} className="appointment-card-column">
+                {showUserColumn && (
+                  <div className="info-row">
+                    <span className="label">Usuario:</span>
+                    <strong className="value">{appt.user?.username || "—"}</strong>
+                  </div>
+                )}
+                {showUserColumn && (
+                  <div className="info-row">
+                    <span className="label">Celular:</span>
+                    <span className="value">{appt.phoneNumber}</span>
+                  </div>
+                )}
+                <div className="info-row">
+                  <span className="label">Servicio:</span>
+                  <span className="product-tag">{appt.product?.nombre || "Servicio"}</span>
+                </div>
+                <div className="info-row">
+                  <span className="label">Total:</span>
+                  <strong className="value">${precioTotal.toFixed(2)}</strong>
+                </div>
+                <div className="info-row">
+                  <span className="label">Seña (50%):</span>
+                  <strong className="value" style={{ color: "#28a745" }}>${pagado.toFixed(2)}</strong>
+                </div>
+                <div className="info-row">
+                  <span className="label">Restante:</span>
+                  <strong className="value" style={{ color: "#dc3545" }}>${restante.toFixed(2)}</strong>
+                </div>
+                <div className="info-row">
+                  <span className="label">Fecha:</span>
+                  <span className="value">{appt.date}</span>
+                </div>
+                <div className="info-row">
+                  <span className="label">Hora:</span>
+                  <strong className="value" style={{ color: "#007bff" }}>{appt.time}</strong>
+                </div>
 
-              return (
-                <tr key={appt.id}>
-                  {showUserColumn && (
-                    <td data-label="Usuario">
-                      <div style={{ fontWeight: "bold" }}>{appt.user?.username || "—"}</div>
-                    </td>
-                  )}
-
-                  {showUserColumn && (
-                    <td data-label="Celular">
-                      <small>{appt.phoneNumber}</small>
-                    </td>
-                  )}
-                  
-                  <td data-label="Servicio">
-                    <span className="product-tag">
-                      {appt.product?.nombre || "Servicio"}
-                    </span>
-                  </td>
-
-                  <td data-label="Total">
-                    <span style={{ fontWeight: "bold" }}>${precioTotal.toFixed(2)}</span>
-                  </td>
-
-                  <td data-label="pagado (50%)">
-                    <span style={{ color: "#28a745", fontWeight: "bold" }}>${pagado.toFixed(2)}</span>
-                  </td>
-
-                  <td data-label="Restante">
-                    <span style={{ color: "#dc3545", fontWeight: "bold" }}>${restante.toFixed(2)}</span>
-                  </td>
-
-                  <td data-label="Fecha">
-                    <div>{appt.date}</div>
-                  </td>
-
-                  <td data-label="Hora">
-                    <small style={{ color: "#007bff", fontWeight: "bold" }}>{appt.time}</small>
-                  </td>
-
-                  <td data-label="Comprobante" className="proof-cell">
+                {/* --- CORRECCIÓN DE COMPROBANTE --- */}
+                <div className="info-row proof-section">
+                  <span className="label">Comprobante:</span>
+                  <div className="thumbnail-container">
                     {appt.paymentImageUrl ? (
-                      <div className="thumbnail-wrapper" onClick={() => setSelectedImage(appt.paymentImageUrl)}>
-                        <img src={appt.paymentImageUrl} alt="Pago" className="payment-thumbnail" />
-                        <div className="thumbnail-overlay"><span>Ampliar</span></div>
+                      <div 
+                        className="payment-thumb" 
+                        onClick={() => setSelectedImage(appt.paymentImageUrl)}
+                      >
+                        <img src={appt.paymentImageUrl} alt="Miniatura Pago" />
+                        <div className="thumb-overlay"><span>Ampliar</span></div>
                       </div>
-                    ) : <span className="no-proof">Sin archivo</span>}
-                  </td>
-
-                  <td data-label="Estado">
-                    <span className={`status-pill ${appt.status}`}>
-                      {appt.status}
-                    </span>
-                  </td>
-
-                  <td data-label="Acciones" className="actions-cell">
-                    {appt.status !== "cancelled" && (
-                      <button className="btn-cancel" onClick={() => handleCancelClick(appt.id)}>
-                        Cancelar
-                      </button>
+                    ) : (
+                      <span className="no-proof">Sin captura</span>
                     )}
-                    {isAdmin && (
-                      <button className="btn-delete" onClick={() => handleDeleteClick(appt.id)}>
-                        Eliminar
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              );
-            })
-          )}
-        </tbody>
-      </table>
+                  </div>
+                </div>
 
-      {/* --- MODALES --- */}
+                <div className="info-row">
+                  <span className="label">Estado:</span>
+                  <span className={`status-pill ${appt.status}`}>{appt.status}</span>
+                </div>
+
+                <div className="actions-vertical">
+                  {appt.status !== "cancelled" && (
+                    <button className="bton-cancel" onClick={() => { setModalConfig({ id: appt.id, type: "cancel" }); setConfirmOpen(true); }}>
+                      Cancelar
+                    </button>
+                  )}
+                  {isAdmin && (
+                    <button className="bton-delete" onClick={() => { setModalConfig({ id: appt.id, type: "delete" }); setConfirmOpen(true); }}>
+                      Eliminar
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {/* --- MODAL PANTALLA COMPLETA --- */}
       {selectedImage && (
         <div className="image-fullscreen-modal" onClick={() => setSelectedImage(null)}>
           <div className="modal-content-wrapper" onClick={(e) => e.stopPropagation()}>
             <img src={selectedImage} alt="Pago Ampliado" className="fullscreen-image" />
-            <button className="close-modal-btn" onClick={() => setSelectedImage(null)}>×</button>
+            <button className="close-modal-btn" onClick={() => setSelectedImage(null)}>&times;</button>
           </div>
         </div>
       )}
@@ -175,7 +152,6 @@ function AppointmentsTable({
       />
 
       <AlertModal open={alertOpen} title="Notificación" message={alertMessage} onClose={() => setAlertOpen(false)} />
-
     </div>
   );
 }

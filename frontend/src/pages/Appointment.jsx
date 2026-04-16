@@ -16,13 +16,13 @@ function Appointment() {
       <AppointmentForm />
 
       {isUser(user) && (
-        <button onClick={() => setView("my")}>
+        <button className="btn-view" onClick={() => setView("my")}>
           Ver mis turnos
         </button>
       )}
 
       {isAdmin(user) && (
-        <button onClick={() => setView("all")}>
+        <button className="btn-view" onClick={() => setView("all")}>
           Ver todos los turnos
         </button>
       )}

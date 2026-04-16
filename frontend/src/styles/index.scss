@@ -2,6 +2,7 @@
 @use '__reset.scss';
 @use './pagesStyles/__homeStyle.scss';
 @use './pagesStyles/__serviciosStyle.scss';
+@use './pagesStyles/__appointmentStyle.scss';
 @use './componentes-css/__productList-style.scss';
 @use './componentes-css/__tablasApoinment.scss';
 @use './componentes-css/_carousel.scss';
@@ -9,4 +10,5 @@
 @use './componentes-css/_managementProduct.scss';
 @use './componentes-css/_confirmModal.scss';
 @use './componentes-css/_nadvar.scss';
+@use './componentes-css/_allApoinment.scss';
 

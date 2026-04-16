@@ -1,0 +1,22 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+@use 'sass:color';
+@include mobile{
+    .product-form-wrapper{
+        .btn-view{
+            margin: 20px 0;
+            padding: 10px 15px;
+            background-color: $color-blue;
+            color: $color-white;
+            border: none;
+            border-radius: $radius;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: color.scale($color-blue, $lightness: -10%);
+            }
+        }
+    }
+}

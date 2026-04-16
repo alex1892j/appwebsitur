@@ -38,7 +38,7 @@ function AllAppointments() {
   return (
     <div className="admin-appointments-view">
       <header className="view-header">
-        <h2>Panel de Administración - Turnos</h2>
+        <h2 className="h2-title">Panel de Administración - Turnos</h2>
         <button className="btn-refresh" onClick={fetchAppointments}>
           Actualizar Lista 🔄
         </button>
